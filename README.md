@@ -132,6 +132,9 @@ A simple caching mechanism is implemented.
 
 On each query, the **entire record (row)** from the table is cached.
 
+![image](https://github.com/user-attachments/assets/b1640f3e-eb25-40da-a9be-05a5a9210b8d)
+
+
 For example, if a user queries:
 
 ```json
