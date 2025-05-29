@@ -115,7 +115,7 @@ This URL should open this view:
 
 ---
 
-## Testing
+## Tests
 
 There is a test file named `app.controller.spec.ts` that contains a collection of tests covering the full end-to-end process of this flow.
 
