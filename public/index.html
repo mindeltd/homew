@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Query Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 16px;
+      font-size: 16px;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .result-container {
+      margin-top: 30px;
+    }
+
+    .result-label {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .result-box {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      padding: 12px;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+  <script>
+    async function sendQuery() {
+      const ticker = document.getElementById('ticker').value;
+      const column = document.getElementById('column').value;
+      const table = document.getElementById('table').value;
+
+      const resultBox = document.getElementById('result');
+
+      try {
+        const response = await fetch(`/query?ticker=${ticker}&column=${column}&table=${table}`);
+
+        let text;
+        resultBox.className = 'result-box';
+
+        if (!response.ok) {
+          const error = await response.json();
+          text = error.message || 'Unknown error';
+          resultBox.classList.add('error');
+        } else {
+          try {
+            const json = await response.json();
+            text = JSON.stringify(json.result, null, 2);
+          } catch {
+            text = await response.text();
+          }
+          resultBox.classList.add('success');
+        }
+
+        resultBox.textContent = text;
+      } catch (err) {
+        resultBox.textContent = 'Network or server error';
+        resultBox.className = 'result-box error';
+        console.error(err);
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Query Data</h1>
+
+  <label>
+    Ticker:
+    <input type="text" id="ticker" />
+  </label>
+  <label>
+    Column:
+    <input type="text" id="column" />
+  </label>
+  <label>
+    Table:
+    <input type="text" id="table" />
+  </label>
+
+  <button onclick="sendQuery()">Submit</button>
+
+  <div class="result-container">
+    <div class="result-label">Result:</div>
+    <div id="result" class="result-box">No data yet.</div>
+  </div>
+</body>
+</html>
