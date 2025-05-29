@@ -118,6 +118,7 @@ This URL should open this view:
 ## Tests
 
 There is a test file named `app.controller.spec.ts` that contains a collection of tests covering the full end-to-end process of this flow.
+It uses temporary SQLite database with some seeded data (for normal run postgres database is used)
 
 after running command:
 npm run test
