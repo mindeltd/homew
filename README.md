@@ -13,7 +13,7 @@ The application responds with the requested data point fetched directly from a *
 ## Prerequisites
 
 - Node.js (v22)
-- PostgreSQL installed and running locally (if not using Docker)
+- PostgreSQL installed and running locally
 - Docker & Docker Compose (if running via containers)
 
 ---
